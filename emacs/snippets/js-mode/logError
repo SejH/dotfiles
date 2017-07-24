@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: LogDebug
+# key: loge
+# --
+logger.error({ __filename$1 }, $0, error);

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Promise
+# key: pr
+# --
+new Promise((resolve, reject) => {
+    $0
+})

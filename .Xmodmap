@@ -1,0 +1,7 @@
+#  Swap left shift and left control
+remove Shift = Shift_L
+remove Control = Control_L
+keysym Control_L = Shift_L
+keysym Shift_L = Control_L
+add Shift = Shift_L
+add Control = Control_L

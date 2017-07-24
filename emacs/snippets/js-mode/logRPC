@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: LogRPC
+# key: logr
+# --
+logger.debug({ __filename, RPC: response._name$1 }, $0);
