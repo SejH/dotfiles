@@ -365,6 +365,43 @@
 (global-set-key (kbd "C-s-<down>") 'shrink-window)
 (global-set-key (kbd "C-s-<up>") 'enlarge-window)
 
+(defun my-file-exists-p (fname)
+  (cond
+   ((file-exists-p fname) fname)
+   ((file-exists-p (concat fname ".js")) (concat fname ".js"))
+   ((file-exists-p (concat fname ".jsx")) (concat fname ".jsx"))
+   ((file-exists-p (concat fname ".css")) (concat fname ".css"))
+   (t nil)))
+
+(defun my-file-opener ()
+  (interactive)
+  (let (($path (if (use-region-p)
+                   (buffer-substring-no-properties (region-beginning) (region-end))
+                 (let (p0 p1 p2)
+                   (setq p0 (point))
+                   ;; chars that are likely to be delimiters of full path, e.g. space, tabs, brakets.
+                   (skip-chars-backward "^  \"\t\n`'|()[]{}<>〔〕“”〈〉《》【】〖〗«»‹›·。\\`")
+                   (setq p1 (point))
+                   (goto-char p0)
+                   (skip-chars-forward "^  \"\t\n`'|()[]{}<>〔〕“”〈〉《》【】〖〗«»‹›·。\\'")
+                   (setq p2 (point))
+                   (goto-char p0)
+                   (buffer-substring-no-properties p1 p2)))))
+    (if (string-match-p "\\`https?://" $path)
+        (browse-url $path)
+      ;; It is not a website => lets assume it is a file!
+      ;; Search for it and go a max of 15 steps up
+      (let ((cnt 0))
+        (while (and (not (my-file-exists-p (file-truename $path))) (< cnt 15))
+          (progn
+            (setq $path (concat "../" $path))
+            (setq cnt (+ 1 cnt))))
+        (if (my-file-exists-p (file-truename $path))
+            (find-file (my-file-exists-p (file-truename $path)))
+          (message "Could not find the specified file! `%s'" ($path)))))))
+
+(global-set-key (kbd "C-x C-g") 'my-file-opener)
+
 (yas-reload-all)
 
 (split-window-right)
