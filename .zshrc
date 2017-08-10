@@ -94,11 +94,11 @@ export EDITOR='emacs -q'
 alias ttop='top -s1 -o cpu -R -F'
 alias ll='ls -la'
 alias lock='gnome-screensaver-command -l'
+alias pd='printDir'
 
 findContent() {
     echo $1
-    find . -type f -exec grep --color -nH -e $1 {} +
-    # grep -rnw ./ -e $1
+    find . -type f -not -path "*/.git/*" -not -path "*/node_modules/*" -not -path "*/build/*" -exec grep --color -nH -e $1 {} +
 }
 alias ff=findContent
 
