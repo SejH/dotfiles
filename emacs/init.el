@@ -2,7 +2,7 @@
 ;; Packages
 
 ;; C-h v package-activated-list
-(setq package-list '(ac-emmet auto-complete popup emmet-mode ac-js2 skewer-mode js2-mode simple-httpd js2-mode auto-complete popup context-coloring emmet-mode emoji-cheat-sheet-plus helm helm-core async popup async eslint-fix esxml exec-path-from-shell flycheck seq let-alist pkg-info epl dash flymd git f dash s dash s git-command with-editor dash async term-run go-mode golden-ratio google-this haskell-mode helm helm-core async popup async helm-core async js-comint js-doc js2-refactor yasnippet s dash multiple-cursors s js2-mode json-mode json-snatcher json-reformat json-reformat json-snatcher jsx-mode let-alist lorem-ipsum lua-mode magit magit-popup dash async git-commit with-editor dash async dash with-editor dash async dash async magit-popup dash async mkdown markdown-mode multiple-cursors nginx-mode nodejs-repl pkg-info epl popup s seq skewer-mode js2-mode simple-httpd spotify swift-mode term-run typescript-mode uuidgen vlf web-mode with-editor dash async yaml-mode yasnippet))
+(setq package-list '(ac-emmet ac-js2 async auto-complete dash emmet-mode emoji-cheat-sheet-plus epl eslint-fix esxml exec-path-from-shell f fill-column-indicator flycheck flymd ghub git git-command git-commit go-mode google-this haskell-mode helm helm-core js-comint js-doc js2-mode js2-refactor json-mode json-reformat json-snatcher jsx-mode let-alist lorem-ipsum lua-mode magit magit-popup markdown-mode mkdown multiple-cursors nginx-mode nodejs-repl pkg-info popup s seq simple-httpd skewer-mode solidity-mode spotify swift-mode term-run typescript-mode uuidgen vlf web-mode with-editor yaml-mode yasnippet))
 
 ;; ;;**************************************************
 ;; ;; Emacs packages
@@ -198,6 +198,7 @@
 
 (add-hook 'js2-mode-hook #'js2-refactor-mode)
 (js2r-add-keybindings-with-prefix "C-c C-m")
+;; (add-hook 'js2-mode-hook 'fci-mode)
 
 ;; (add-hook 'js2-mode-hook 'ac-js2-mode)
 ;; (add-hook 'js2-mode-hook 'auto-complete-mode)
@@ -405,4 +406,4 @@
 (yas-reload-all)
 
 (split-window-right)
-(split-window-right)
+;; (split-window-right)
