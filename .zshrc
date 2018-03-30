@@ -1,5 +1,10 @@
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
+
+fpath=(~/.zsh/completion $fpath)
+autoload -Uz compinit && compinit -i
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -55,13 +60,16 @@ HIST_STAMPS="dd/mm/yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git npm node osx)
+plugins=(git npm node osx zsh-syntax-highlighting)
 
 # User configuration
 
 export PATH="/usr/local/mysql/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
+export GOPATH="$HOME/go"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH:$GOROOT/bin:$GOPATH/bin"
 
+xset r rate 200 35
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
@@ -92,9 +100,11 @@ export EDITOR='emacs -q'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias ttop='top -s1 -o cpu -R -F'
-alias ll='ls -la'
+alias ll='ls -lah'
 alias lock='gnome-screensaver-command -l'
 alias pd='printDir'
+alias less='less -Nij5'
+alias dud='du -hd 1'
 
 findContent() {
     echo $1
@@ -133,14 +143,22 @@ alias cd='pushd'
 alias b='popd'
 alias flip='pushd_builtin'
 
+alias gspa='git stash && git pull && git stash apply'
+
+
 # Change the keyboard layout and reload xmodmap
 kmap() {
     setxkbmap -layout $1 && xmodmap ~/.Xmodmap
 }
 
+# Change the keyboard layout and reload xmodmap (planck)
+kmapp() {
+    setxkbmap -layout $1 && xmodmap ~/.Xmodmap-empty
+}
+
 docker_bp () {
     echo $1
-    docker build -t briteback/$1 . && docker push briteback/$1
+    docker build -t briteback/$1 . --squash && docker push briteback/$1
 }
 alias dockerbp='docker_bp'
 
