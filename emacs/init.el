@@ -2,7 +2,7 @@
 ;; Packages
 
 ;; C-h v package-activated-list
-(setq package-list '(ac-emmet ac-js2 async auto-complete dash emmet-mode emoji-cheat-sheet-plus epl eslint-fix esxml exec-path-from-shell f fill-column-indicator flycheck flymd ghub git git-command git-commit go-mode google-this haskell-mode helm helm-core js-comint js-doc js2-mode js2-refactor json-mode json-reformat json-snatcher jsx-mode let-alist lorem-ipsum lua-mode magit magit-popup markdown-mode mkdown multiple-cursors nginx-mode nodejs-repl pkg-info popup s seq simple-httpd skewer-mode solidity-mode spotify swift-mode term-run typescript-mode uuidgen vlf web-mode with-editor yaml-mode yasnippet))
+(setq package-list '(ac-emmet ac-js2 async auto-complete dash emmet-mode emoji-cheat-sheet-plus epl eslint-fix esxml exec-path-from-shell f fill-column-indicator flycheck flymd ghub git git-command git-commit go-mode google-this haskell-mode helm helm-core js-comint js-doc js2-mode js2-refactor json-mode json-reformat json-snatcher jsx-mode let-alist lorem-ipsum lua-mode magit magit-popup markdown-mode mkdown multiple-cursors nginx-mode nodejs-repl pkg-info popup s seq simple-httpd skewer-mode spotify swift-mode term-run typescript-mode uuidgen vlf web-mode with-editor yaml-mode yasnippet))
 
 ;; ;;**************************************************
 ;; ;; Emacs packages
@@ -69,7 +69,7 @@
 
 (if (eq system-type 'darwin)
     (setq mac-option-modifier nil
-          mac-command-modifier 'meta
+;;          mac-command-modifier 'meta
           x-select-enable-clipboard t)
   )
 
@@ -82,7 +82,9 @@
 (global-set-key (kbd "C-=") 'find-grep)
 
 
-(define-key input-decode-map [?\C-i] [C-i])
+(if window-system
+    (define-key input-decode-map [?\C-i] [C-i])
+  )
 
 (global-set-key (kbd "<C-i>") 'indent-region)
 (global-set-key "\C-co" 'occur)
@@ -99,6 +101,7 @@
    (interactive)
    (popup-menu 'yank-menu)))
 
+(setq create-lockfiles nil)
 
 ;;Calendar diary
 (setq view-diary-entries-initially t
@@ -142,6 +145,27 @@
 ;;#######################################################
 ;; Improved JavaScript stuff
 
+;; typescript
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+
 ;;  customize-group
 
 ;; Start scratch buffer with js2-mode
@@ -153,6 +177,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(browse-url-browser-function (quote browse-url-chromium))
  '(custom-safe-themes
    (quote
     ("c924950f6b5b92a064c5ad7063bb34fd3facead47cd0d761a31e7e76252996f7" "67a0265e2497207f5f9116c4d2bfbbab4423055e3ab1fa46ea6bd56f7e322f6a" default)))
@@ -160,14 +185,20 @@
  '(erc-modules
    (quote
     (autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring smiley stamp spelling track)))
+ '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
+ '(js-indent-level 2)
  '(js2-basic-offset 2)
  '(js2-bounce-indent-p t)
  '(js2-idle-timer-delay 0.5)
  '(js2-indent-switch-body t)
  '(js2r-prefered-quote-type 2)
  '(js2r-use-strict t)
+ '(typescript-indent-level 2)
+ '(web-mode-attr-indent-offset 2)
+ '(web-mode-attr-value-indent-offset 2)
  '(web-mode-code-indent-offset 2)
+ '(web-mode-enable-auto-indentation t)
  '(web-mode-markup-indent-offset 2))
 
 ;; Search on mdn
@@ -275,7 +306,8 @@
 (global-set-key (kbd "<f8>") 'spotify-playpause)
 (global-set-key (kbd "<f7>") 'spotify-previous)
 (global-set-key (kbd "<f9>") 'spotify-next)
-(if (not (eq system-type 'darwin))
+
+(if (and window-system (not (eq system-type 'darwin)))
     (spotify-enable-song-notifications)
   )
 
@@ -401,7 +433,7 @@
             (find-file (my-file-exists-p (file-truename $path)))
           (message "Could not find the specified file! `%s'" ($path)))))))
 
-(global-set-key (kbd "C-x C-g") 'my-file-opener)
+;; (global-set-key (kbd "C-x C-g") 'my-file-opener)
 
 (yas-reload-all)
 
