@@ -105,6 +105,7 @@ alias lock='gnome-screensaver-command -l'
 alias pd='printDir'
 alias less='less -Nij5'
 alias dud='du -hd 1'
+alias ema='emacsclient -n'
 
 findContent() {
     echo $1
