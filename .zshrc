@@ -162,6 +162,11 @@ docker_bp () {
 }
 alias dockerbp='docker_bp'
 
+# Alt-s inserts "sudo" at the start of the line.
+insert_sudo () { zle beginning-of-line; zle -U "sudo " }
+zle -N insert-sudo insert_sudo
+bindkey "^[s" insert-sudo
+
 # This will clear the dir stack
 alias cl='dirs -c'
 
