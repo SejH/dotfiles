@@ -153,6 +153,16 @@
 ;; Improved JavaScript stuff
 
 ;; typescript
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+;; enable typescript-tslint checker
+;; (flycheck-add-mode 'typescript-tslint 'web-mode)
+
+
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
@@ -201,6 +211,7 @@
  '(js2-indent-switch-body t)
  '(js2r-prefered-quote-type 2)
  '(js2r-use-strict t)
+ '(tide-hl-identifier-idle-time 0.1)
  '(typescript-indent-level 2)
  '(web-mode-attr-indent-offset 2)
  '(web-mode-attr-value-indent-offset 2)
@@ -388,7 +399,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(js2-external-variable ((t (:foreground "#DFAF8F"))))
- '(js2-function-param ((t (:foreground "#DFAF8F")))))
+ '(js2-function-param ((t (:foreground "#DFAF8F"))))
+ '(tide-hl-identifier-face ((t (:background "dim gray"))))
+ '(typescript-jsdoc-tag ((t (:foreground "dim gray")))))
 
 
 (defalias 'yes-or-no-p 'y-or-n-p)
