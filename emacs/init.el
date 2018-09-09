@@ -1,8 +1,10 @@
 ;;; Code:
 ;; Packages
 
+(and window-system (server-start))
+
 ;; C-h v package-activated-list
-(setq package-list '(ac-emmet ac-js2 async auto-complete dash emmet-mode emoji-cheat-sheet-plus epl eslint-fix esxml exec-path-from-shell f fill-column-indicator flycheck flymd ghub git git-command git-commit go-mode google-this haskell-mode helm helm-core js-comint js-doc js2-mode js2-refactor json-mode json-reformat json-snatcher jsx-mode let-alist lorem-ipsum lua-mode magit magit-popup markdown-mode mkdown multiple-cursors nginx-mode nodejs-repl pkg-info popup s seq simple-httpd skewer-mode spotify swift-mode term-run typescript-mode uuidgen vlf web-mode with-editor yaml-mode yasnippet))
+(setq package-list '(ac-emmet ac-js2 async auto-complete dash emmet-mode emoji-cheat-sheet-plus epl eslint-fix esxml exec-path-from-shell f fill-column-indicator flycheck flymd ghub git git-command git-commit go-mode google-this haskell-mode helm helm-core js-comint js-doc js2-mode js2-refactor json-mode json-reformat json-snatcher jsx-mode let-alist lorem-ipsum lua-mode magit magit-popup markdown-mode mkdown multiple-cursors nginx-mode nodejs-repl pkg-info popup s seq simple-httpd skewer-mode solidity-mode spotify swift-mode term-run typescript-mode uuidgen vlf web-mode with-editor yaml-mode yasnippet))
 
 ;; ;;**************************************************
 ;; ;; Emacs packages
