@@ -34,6 +34,11 @@
 ;**************************************************
 ;; use Shift+arrow_keys to move cursor around split panes
 (windmove-default-keybindings)
+(global-set-key (kbd "C-x <up>") 'windmove-up)
+(global-set-key (kbd "C-x <down>") 'windmove-down)
+(global-set-key (kbd "C-x <right>") 'windmove-right)
+(global-set-key (kbd "C-x <left>") 'windmove-left)
+
 
 ;; when cursor is on edge, move to the other sidebare, as in a toroidal space
 (setq windmove-wrap-around t)
